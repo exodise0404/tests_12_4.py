@@ -1,5 +1,6 @@
 import logging
 import unittest
+
 class Runner:
     def __init__(self, name, speed=5):
         if isinstance(name, str):
@@ -49,38 +50,38 @@ class Tournament:
 
         return finishers
 
-first = Runner('Вося', 10)
-second = Runner('Илья', 5)
-third = Runner('Арсен', 10)
+#first = Runner('Вося', 10)
+#second = Runner('Илья', 5)
+#third = Runner('Арсен', 10)
 #
-t = Tournament(101, first, second)
-print(t.start())
+#t = Tournament(101, first, second)
+#print(t.start())
+
+
+logging.basicConfig(level=logging.INFO, filemode="w", filename="runner_tests.log",
+                    encoding="utf-8", format="%(asctime)s -|- %(levelname)s -|- %(message)s")
 
 
 class RunnerTest(unittest.TestCase):
     def test_walk(self):
         try:
             obj1 = Runner('Вася', -1)
-            for i in range(10):
+            for _ in range(10):
                 obj1.walk()
             self.assertEqual(obj1.distance, 100)
-            logging.INFO("'test_walk' выполнен успешно")
-        except ValueError as err:
-            logging.WARNING("Неверная скорость для Runner", exc_info=True)
-
+            logging.info('"test_walk" выполнен успешно')
+        except ValueError:
+            logging.warning("Неверная скорость для Runner", exc_info=True)
 
     def test_run(self):
         try:
-            obj2 = Runner(123, 10)
-            for i in range(10):
+            obj2 = Runner(2)
+            for _ in range(10):
                 obj2.run()
             self.assertEqual(obj2.distance, 100)
-            logging.INFO("'test_run' выполнен успешно'")
-        except TypeError as err:
-            logging.WARNING("Неверный тип данных для объекта Runner", exc_info=True)
+            logging.info('"test_run" выполнен успешно')
+        except TypeError:
+            logging.warning("Неверный тип данных для объекта Runner", exc_info=True)
 
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, filemode="w", filename="runner_tests.log",
-                    encoding="utf-8", format="%(asctime)s | %(levelname)s | %(message)s")
-
+    if __name__ == "__main__":
+        unittest.main()
